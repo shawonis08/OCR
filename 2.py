@@ -11,8 +11,13 @@ _, contours, _ = cv2.findContours(thresh[:, 0:W, ], cv2.RETR_TREE, cv2.CHAIN_APP
 for i in range(len(contours)):
     perimeter = cv2.arcLength(contours[i], True)
     if perimeter >250 and perimeter <350:
-        cv2.drawContours (img, contours, i, (0, 255, 0),2)
+        # cv2.drawContours (img, contours, i, (0, 255, 0),2)
         list1.append(i)
+for x in list1:
+    M = cv2. moments(contours[x])
+    cx = int(M['m10']/M['m00'])
+    cy = int(M['m01'] / M['m00'])
+    cv2.rectangle(img, (cx-40, cy-40),(cx+40, cy+40), (0, 255, 255), 1)
 
 cv2.imshow('thresh', img)
 cv2.waitKey(0)
